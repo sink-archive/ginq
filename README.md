@@ -5,7 +5,7 @@
 
 GINQ ports the amazing LINQ features of .NET to Golang.
 Note that this library only deals with the `.Where()`, `.Select()`, and similar extension methods.
-The awesome `(from x in list select x.y where x.z`
+The awesome `(from x in list select x.y where x.z)`
 query syntax would require special language support that a library cannot provide.
 
 Read about LINQ [here!](https://docs.microsoft.com/en-us/dotnet/standard/linq)
