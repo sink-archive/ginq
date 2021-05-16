@@ -26,10 +26,13 @@ func skipLast[T](amount int, slice []interface{}) [] T {
 
 func skipWhile[T](check func(T) bool, slice []interface{}) [] T {
 	var out [] T
+	returnAll := false
 	for _, item := range enforceSliceType[T](slice) {
-		if !check(item) {
-			out = append(out, item)
+		if !returnAll && check(item) {
+			returnAll = true
+			continue
 		}
+		out = append(out, item)
 	}
 	return out
 }
@@ -62,9 +65,10 @@ func takeLast[T](amount int, slice []interface{}) [] T {
 func takeWhile[T](check func(T) bool, slice []interface{}) [] T {
 	var out [] T
 	for _, item := range enforceSliceType[T](slice) {
-		if check(item) {
-			out = append(out, item)
+		if !check(item) {
+			return out
 		}
+		out = append(out, item)
 	}
 
 	return out
