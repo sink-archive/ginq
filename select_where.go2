@@ -2,24 +2,35 @@ package ginq
 
 func select_[Tin, Tout](operation func(Tin) Tout, slice []interface{}) []Tout {
 	correctTypeSlice := enforceSliceType[Tin](slice)
-	var output []Tout
+	var out []Tout
 
 	for _, item := range correctTypeSlice {
-		output = append(output, operation(item))
+		out = append(out, operation(item))
 	}
 
-	return output
+	return out
 }
 
 func selectMany[Tin, Tout](operation func(Tin) [] Tout, slice []interface{}) [] Tout {
 	correctTypeSlice := enforceSliceType[Tin](slice)
-	var output []Tout
+	var out []Tout
 
 	for _, item := range correctTypeSlice {
 		for _, resultItem := range operation(item) {
-			output = append(output, resultItem)
+			out = append(out, resultItem)
 		}
 	}
 
-	return output
+	return out
+}
+
+func where[T](check func(T) bool, slice []interface{}) [] T {
+	var out []T
+	for _, item := range enforceSliceType[T](slice) {
+		if check(item) {
+			out = append(out, item)
+		}
+	}
+
+	return out
 }
