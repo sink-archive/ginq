@@ -1,0 +1,53 @@
+package ginq
+
+func join[Tfirst, Tsecond, Tkey, Tout](
+	firstSelector func(Tfirst) Tkey,
+	secondSelector func(Tsecond) Tkey,
+	resultFunc func(Tkey, Tkey) Tout,
+	firstSlice []interface{},
+	secondSlice []interface{}) []Tout {
+
+	var out []Tout
+	firstStatic := enforceSliceType[Tfirst](firstSlice)
+	secondStatic := enforceSliceType[Tsecond](secondSlice)
+
+	for _, firstItem := range firstStatic {
+		firstSelected := firstSelector(firstItem)
+		for _, secondItem := range secondStatic {
+			secondSelected := secondSelector(secondItem)
+			if firstSelected == secondSelected {
+				out = append(out, resultFunc(firstSelected, secondSelected))
+				break
+			}
+		}
+	}
+
+	return out
+}
+
+func groupJoin[Tfirst, Tsecond, Tkey, Tout](
+	firstSelector func(Tfirst) Tkey,
+	secondSelector func(Tsecond) Tkey,
+	resultFunc func(Tkey, Tkey) [] Tout,
+	firstSlice []interface{},
+	secondSlice []interface{}) []Tout {
+
+	var out []Tout
+	firstStatic := enforceSliceType[Tfirst](firstSlice)
+	secondStatic := enforceSliceType[Tsecond](secondSlice)
+
+	for _, firstItem := range firstStatic {
+		firstSelected := firstSelector(firstItem)
+		for _, secondItem := range secondStatic {
+			secondSelected := secondSelector(secondItem)
+			if firstSelected == secondSelected {
+				for _, resultItem := range resultFunc(firstSelected, secondSelected) {
+					out = append(out, resultItem)
+				}
+				break
+			}
+		}
+	}
+
+	return out
+}
