@@ -25,6 +25,8 @@ Select(/* select stuff */, Where(/* where stuff */, x))
 ```
 ### Functions that weren't implemented
 - `.OfType()` - Go type system, and being OOP, and I don't know how I'd even approach this.
+- `.ThenBy()` - This function provides a fallback for `OrderBy`, so that items that match the same when compared are sorted a different way.
+- `.LongCount()` - Go's `len()` returns an `int` and not an `int64`.
 
 ## List of GINQ functions
 ### `Select[Tin, Tout](operation func(Tin) Tout, slice []Tin) []Tout`
@@ -111,3 +113,5 @@ and should return a `Tout` object to be added to the list which is then returned
 
 ### `Where[T](check func(T) bool, slice []T) []T`
 This passes every item in the list to `check`, and return a list in which only includes values where `check` was true.
+
+### TODO: document orderby, reverse, and all aggregation methods

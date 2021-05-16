@@ -1,0 +1,37 @@
+package ginq
+
+import "sort"
+
+func orderBy[T](isFirstLess func(T, T) bool, slice []T) []T {
+	out := slice
+	sort.SliceStable(out, func(i, j int) bool {
+		return isFirstLess(slice[i], slice[j])
+	})
+
+	return out
+}
+
+func orderByNumKey[T](keySelector func(T) float64, slice []T) []T {
+	out := slice
+	sort.SliceStable(out, func(i, j int) bool {
+		return keySelector(slice[i]) < keySelector(slice[j])
+	})
+
+	return out
+}
+
+func orderByDescending[T](isFirstless func(T, T) bool, slice []T) []T {
+	return reverse[T](orderBy[T](isFirstless, slice))
+}
+
+func orderByNumKeyDescending[T](keySelector func(T) float64, slice []T) []T {
+	return reverse[T](orderByNumKey[T](keySelector, slice))
+}
+
+func reverse[T](slice []T) []T {
+	out := []T{}
+	for i, item := range slice {
+		out[len(slice) - i] = item
+	}
+	return out
+}
