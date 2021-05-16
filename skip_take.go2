@@ -1,0 +1,71 @@
+package ginq
+
+func skip[T](amount int, slice []interface{}) [] T {
+	var out [] T
+	for i, item := range enforceSliceType[T](slice) {
+		if i < amount {
+			continue
+		}
+		out = append(out, item)
+	}
+
+	return out
+}
+
+func skipLast[T](amount int, slice []interface{}) [] T {
+	var out [] T
+	for i, item := range enforceSliceType[T](slice) {
+		if len(slice) - i < amount {
+			continue
+		}
+		out = append(out, item)
+	}
+
+	return out
+}
+
+func skipWhile[T](check func(T) bool, slice []interface{}) [] T {
+	var out [] T
+	for _, item := range enforceSliceType[T](slice) {
+		if !check(item) {
+			out = append(out, item)
+		}
+	}
+	return out
+}
+
+func take[T](amount int, slice []interface{}) [] T {
+	var out [] T
+	for i, item := range enforceSliceType[T](slice) {
+		if i > amount {
+			continue
+		}
+		out = append(out, item)
+	}
+
+	return out
+}
+
+
+func takeLast[T](amount int, slice []interface{}) [] T {
+	var out [] T
+	for i, item := range enforceSliceType[T](slice) {
+		if len(slice) - i > amount {
+			continue
+		}
+		out = append(out, item)
+	}
+
+	return out
+}
+
+func takeWhile[T](check func(T) bool, slice []interface{}) [] T {
+	var out [] T
+	for _, item := range enforceSliceType[T](slice) {
+		if check(item) {
+			out = append(out, item)
+		}
+	}
+
+	return out
+}
