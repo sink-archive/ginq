@@ -1,8 +1,8 @@
 package ginq
 
-func skip[T](amount int, slice []interface{}) [] T {
+func skip[T](amount int, slice []T) [] T {
 	var out [] T
-	for i, item := range enforceSliceType[T](slice) {
+	for i, item := range slice {
 		if i < amount {
 			continue
 		}
@@ -12,9 +12,9 @@ func skip[T](amount int, slice []interface{}) [] T {
 	return out
 }
 
-func skipLast[T](amount int, slice []interface{}) [] T {
+func skipLast[T](amount int, slice []T) [] T {
 	var out [] T
-	for i, item := range enforceSliceType[T](slice) {
+	for i, item := range slice {
 		if len(slice) - i < amount {
 			continue
 		}
@@ -24,10 +24,10 @@ func skipLast[T](amount int, slice []interface{}) [] T {
 	return out
 }
 
-func skipWhile[T](check func(T) bool, slice []interface{}) [] T {
+func skipWhile[T](check func(T) bool, slice []T) [] T {
 	var out [] T
 	returnAll := false
-	for _, item := range enforceSliceType[T](slice) {
+	for _, item := range slice {
 		if !returnAll && check(item) {
 			returnAll = true
 			continue
@@ -37,9 +37,9 @@ func skipWhile[T](check func(T) bool, slice []interface{}) [] T {
 	return out
 }
 
-func take[T](amount int, slice []interface{}) [] T {
+func take[T](amount int, slice []T) [] T {
 	var out [] T
-	for i, item := range enforceSliceType[T](slice) {
+	for i, item := range slice {
 		if i > amount {
 			continue
 		}
@@ -50,9 +50,9 @@ func take[T](amount int, slice []interface{}) [] T {
 }
 
 
-func takeLast[T](amount int, slice []interface{}) [] T {
+func takeLast[T](amount int, slice []T) [] T {
 	var out [] T
-	for i, item := range enforceSliceType[T](slice) {
+	for i, item := range slice {
 		if len(slice) - i > amount {
 			continue
 		}
@@ -62,9 +62,9 @@ func takeLast[T](amount int, slice []interface{}) [] T {
 	return out
 }
 
-func takeWhile[T](check func(T) bool, slice []interface{}) [] T {
+func takeWhile[T](check func(T) bool, slice []T) [] T {
 	var out [] T
-	for _, item := range enforceSliceType[T](slice) {
+	for _, item := range slice {
 		if !check(item) {
 			return out
 		}

@@ -4,16 +4,14 @@ func join[Tfirst, Tsecond, Tkey, Tout](
 	firstSelector func(Tfirst) Tkey,
 	secondSelector func(Tsecond) Tkey,
 	resultFunc func(Tkey, Tkey) Tout,
-	firstSlice []interface{},
-	secondSlice []interface{}) []Tout {
+	firstSlice []Tfirst,
+	secondSlice []Tsecond) []Tout {
 
 	var out []Tout
-	firstStatic := enforceSliceType[Tfirst](firstSlice)
-	secondStatic := enforceSliceType[Tsecond](secondSlice)
 
-	for _, firstItem := range firstStatic {
+	for _, firstItem := range firstSlice {
 		firstSelected := firstSelector(firstItem)
-		for _, secondItem := range secondStatic {
+		for _, secondItem := range secondSlice {
 			secondSelected := secondSelector(secondItem)
 			if firstSelected == secondSelected {
 				out = append(out, resultFunc(firstSelected, secondSelected))
@@ -29,16 +27,14 @@ func groupJoin[Tfirst, Tsecond, Tkey, Tout](
 	firstSelector func(Tfirst) Tkey,
 	secondSelector func(Tsecond) Tkey,
 	resultFunc func(Tkey, Tkey) [] Tout,
-	firstSlice []interface{},
-	secondSlice []interface{}) []Tout {
+	firstSlice []Tfirst,
+	secondSlice []Tsecond) []Tout {
 
 	var out []Tout
-	firstStatic := enforceSliceType[Tfirst](firstSlice)
-	secondStatic := enforceSliceType[Tsecond](secondSlice)
 
-	for _, firstItem := range firstStatic {
+	for _, firstItem := range firstSlice {
 		firstSelected := firstSelector(firstItem)
-		for _, secondItem := range secondStatic {
+		for _, secondItem := range secondSlice {
 			secondSelected := secondSelector(secondItem)
 			if firstSelected == secondSelected {
 				for _, resultItem := range resultFunc(firstSelected, secondSelected) {

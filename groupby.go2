@@ -4,11 +4,11 @@ func groupBy[Tsource, Tkey, Telement, Tout](
 	keySelector func (Tsource) Tkey,
 	elementSelector func (Tsource) Telement,
 	resultSelector func (Tkey, []Telement) Tout,
-	slice []interface{}) []Tout {
+	slice []Tsource) []Tout {
 
 	var out []Tout
 	groups := make(map[Tkey][]Telement)
-	for _, item := range enforceSliceType[Tsource](slice) {
+	for _, item := range slice {
 		key := keySelector(item)
 		element := elementSelector(item)
 		_, exists := groups[key]
