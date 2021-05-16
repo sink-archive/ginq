@@ -1,7 +1,7 @@
 package ginq
 
-func select_[Tin, Tout](operation func(Tin) Tout, slice []interface{}) []Tout {
-	correctTypeSlice := enforceSliceType[Tin](slice)
+func select_[Tin, Tout](operation func(Tin) Tout, slice []Tin) []Tout {
+	correctTypeSlice := slice
 	var out []Tout
 
 	for _, item := range correctTypeSlice {
@@ -11,8 +11,8 @@ func select_[Tin, Tout](operation func(Tin) Tout, slice []interface{}) []Tout {
 	return out
 }
 
-func selectMany[Tin, Tout](operation func(Tin) [] Tout, slice []interface{}) [] Tout {
-	correctTypeSlice := enforceSliceType[Tin](slice)
+func selectMany[Tin, Tout](operation func(Tin) [] Tout, slice []Tin) []Tout {
+	correctTypeSlice := slice
 	var out []Tout
 
 	for _, item := range correctTypeSlice {
@@ -24,9 +24,9 @@ func selectMany[Tin, Tout](operation func(Tin) [] Tout, slice []interface{}) [] 
 	return out
 }
 
-func where[T](check func(T) bool, slice []interface{}) [] T {
+func where[T](check func(T) bool, slice []T) []T {
 	var out []T
-	for _, item := range enforceSliceType[T](slice) {
+	for _, item := range slice {
 		if check(item) {
 			out = append(out, item)
 		}
