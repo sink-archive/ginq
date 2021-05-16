@@ -1,0 +1,11 @@
+package ginq
+
+func enforceSliceType[T](slice []interface{}) [] T {
+	var correctTypeSlice []T
+
+	for _, item := range slice {
+		correctTypeSlice = append(correctTypeSlice, item.(T))
+	}
+
+	return correctTypeSlice
+}
