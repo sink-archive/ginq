@@ -26,7 +26,7 @@ func join[Tfirst, Tsecond, Tkey, Tout](
 func groupJoin[Tfirst, Tsecond, Tkey, Tout](
 	firstSelector func(Tfirst) Tkey,
 	secondSelector func(Tsecond) Tkey,
-	resultFunc func(Tkey, Tkey) [] Tout,
+	resultFunc func(Tfirst, []Tsecond) Tout,
 	firstSlice []Tfirst,
 	secondSlice []Tsecond) []Tout {
 
@@ -34,15 +34,14 @@ func groupJoin[Tfirst, Tsecond, Tkey, Tout](
 
 	for _, firstItem := range firstSlice {
 		firstSelected := firstSelector(firstItem)
+		var matches [] Tsecond
 		for _, secondItem := range secondSlice {
 			secondSelected := secondSelector(secondItem)
 			if firstSelected == secondSelected {
-				for _, resultItem := range resultFunc(firstSelected, secondSelected) {
-					out = append(out, resultItem)
-				}
-				break
+				matches = append(matches, secondItem)
 			}
 		}
+		out = append(out, resultFunc(firstItem, matches))
 	}
 
 	return out
