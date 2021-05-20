@@ -237,3 +237,8 @@ Single, but instead of an error return `default_`.
 ### Equality
 #### `SequenceEqual[T](first, second []T) bool`
 Checks if the sequences are equal.
+
+### Conversions and things
+#### `ToMap[Tkey, Tvalye](keySelector func(Tvalue) Tkey, slice []Tvalue) map[Tkey]Tvalue`
+For each item in the list, calls `keySelector` and uses that as the key for a map, with the item as the value.
+Duplicate items override the previous copies.

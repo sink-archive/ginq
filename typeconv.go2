@@ -1,0 +1,10 @@
+package ginq
+
+func toMap[Tkey, Tvalue](keySelector func(Tvalue) Tkey, slice []Tvalue) map[Tkey]Tvalue {
+	working := make(map[Tkey]Tvalue)
+	for _, item := range slice {
+		working[keySelector(item)] = item
+	}
+
+	return working
+}
