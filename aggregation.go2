@@ -8,11 +8,15 @@ func average(slice []float64) float64 {
 		total += item
 	}
 
-	return total / float64(len(slice))
+	return total / float64(count[float64](slice))
 }
 
-func count[T](slice []T) int {
-	return len(slice)
+func count[T](slice []T) int64 {
+	var count int64
+	for range slice {
+		count++
+	}
+	return count
 }
 
 func maxInt(slice []int64) int64 {

@@ -114,4 +114,34 @@ and should return a `Tout` object to be added to the list which is then returned
 ### `Where[T](check func(T) bool, slice []T) []T`
 This passes every item in the list to `check`, and return a list in which only includes values where `check` was true.
 
-### TODO: document orderby, reverse, and all aggregation methods
+### `Average(slice []float64) float64`
+This returns the mean average of the floats passed.
+
+### `Count[T](slice []T) int64`
+This returns the amount of items in the slice.
+
+### `MaxInt(slice []int64) int64`
+This returns the largest int in the slice.
+
+### `MaxFloat(slice []float64) float64`
+See above.
+
+### `MinInt(slice []int64) int64`
+This returns the smallest int in the slice.
+
+### `MinFloat(slice []float64) float64`
+See above.
+
+### `SumInts(slice []int64) int64`
+This returns the sum of all ints in the slice.
+
+### `SumFloats(slice []float64) float64`
+See above.
+
+### `Aggregate[T](base T, operation func (working, next T) T, slice []T) T`
+This takes the item `base` and for each item in the slice,
+passes `working`, and `next` - which is the current slice item,
+into `operation`, and `working` for the next item becomes the output of that.
+Once done the final value of `working` is returned.
+
+Use this to do things like appending all strings in a list or something IDK.
