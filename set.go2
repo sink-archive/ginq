@@ -16,7 +16,7 @@ func distinct[T](slice []T) []T {
 	return distinctList
 }
 
-func except[T](first []T, second []T) []T {
+func except[T](first, second []T) []T {
 	itemsInSecond := make(map[T]struct{})
 	for _, item := range second {
 		itemsInSecond[item] = struct{}{}
@@ -33,7 +33,7 @@ func except[T](first []T, second []T) []T {
 	return notInSecond
 }
 
-func intersect[T](first []T, second []T) []T {
+func intersect[T](first, second []T) []T {
 	itemsInSecond := make(map[T]struct{})
 	for _, item := range second {
 		itemsInSecond[item] = struct{}{}
@@ -50,7 +50,7 @@ func intersect[T](first []T, second []T) []T {
 	return inBoth
 }
 
-func union[T](first []T, second []T) []T {
+func union[T](first, second []T) []T {
 	allUniqueItems := make(map[T]struct{})
 	for _, item := range first {
 		allUniqueItems[item] = struct{}{}
@@ -67,7 +67,7 @@ func union[T](first []T, second []T) []T {
 	return mapAsList
 }
 
-func concat[T](first []T, second []T) []T {
+func concat[T](first, second []T) []T {
 	allItems := first
 	for _, item := range second {
 		allItems = append(allItems, item)

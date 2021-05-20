@@ -175,16 +175,16 @@ Use this to do things like appending all strings in a list or something IDK.
 #### `Distinct[T](slice []T) []T`
 This returns the slice with duplicates removed.
 
-#### `Except[T](first []T, second []T) []T`
+#### `Except[T](first, second []T) []T`
 This returns every item in `first` that is not in `second`.
 
-#### `Intersect[T](first []T, second []T []T`
+#### `Intersect[T](first, second []T []T`
 This returns every item that exists in both `first` and `second`.
 
-#### `Union[T](first []T, second []T) []T`
+#### `Union[T](first, second []T) []T`
 This returns both lists concatenated, but with duplicates removed.
 
-#### `Concat[T](first []T, second []T) []T`
+#### `Concat[T](first, second []T) []T`
 This concatenates two slices together and returns the result.
 
 #### `Zip[T1, T2, Tout](zipper func(T1, T2) Tout, first []T1, second []T2) []Tout`
@@ -233,3 +233,7 @@ Get the only item in the list, or if there is more or none throw an error.
 
 #### `SingleOrDefault[T](default_ T, slice []T) T`
 Single, but instead of an error return `default_`.
+
+### Equality
+#### `SequenceEqual[T](first, second []T) bool`
+Checks if the sequences are equal.

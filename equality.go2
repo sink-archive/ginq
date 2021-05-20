@@ -1,0 +1,13 @@
+package ginq
+
+func sequenceEqual[T](first, second []T) bool {
+	secondLength := count[T](second)
+
+	for i, item1 := range first {
+		if i == secondLength || item1 != second[i] {
+			return false
+		}
+	}
+
+	return true
+}
