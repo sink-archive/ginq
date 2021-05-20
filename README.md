@@ -29,28 +29,34 @@ Select(/* select stuff */, Where(/* where stuff */, x))
 - `.LongCount()` - Go's `len()` returns an `int` and not an `int64`.
 
 ## List of GINQ functions
-### `Select[Tin, Tout](operation func(Tin) Tout, slice []Tin) []Tout`
+### Projection
+#### `Select[Tin, Tout](operation func(Tin) Tout, slice []Tin) []Tout`
 `Select` takes a list of `Tin` and performs `operation` on every item, returning the resultant list of `Tout`.
 
-### `Skip[T](amount int, slice []T) []T`
+#### `SelectMany[Tin, Tout](operation func(Tin) []Tout, slice []Tin) []Tout`
+Like `Select` except `operation` returns multiple items. All the lists returned are concatenated into one.
+
+### Partitioning
+#### `Skip[T](amount int, slice []T) []T`
 This function returns every element in the list, except the first `amount` items.
 
-### `SkipLast[T](amount int, slice []T) []T`
+#### `SkipLast[T](amount int, slice []T) []T`
 This function returns every element in the list, except the last `amount` items.
 
-### `SkipWhile[T](check func(T) bool, slice []T) []T`
+#### `SkipWhile[T](check func(T) bool, slice []T) []T`
 Every element in the list will be ignored until `check` returns false, at which point every following element is returned.
 
-### `Take[T](amount int, slice []T) []T`
+#### `Take[T](amount int, slice []T) []T`
 This function returns the first `amount` items of the list.
 
-### `TakeLast[T](amount int, slice []T) []T`
+#### `TakeLast[T](amount int, slice []T) []T`
 This function returns the last `amount` items of the list.
 
-### `TakeWhile[T](check func(T) bool, slice []T) []T`
+#### `TakeWhile[T](check func(T) bool, slice []T) []T`
 Every element in the list is returned until `check` returns false, at which point all following items are ignored.
 
-### `Join[Tfirst, Tsecond, Tkey, Tout](...) []Tout`
+### Joining
+#### `Join[Tfirst, Tsecond, Tkey, Tout](...) []Tout`
 The actual function signature with args is the following:
 ```go
 Join[Tfirst, Tsecond, Tkey, Tout](
@@ -70,7 +76,7 @@ This final value of type `Tout` is added to the list that is returned.
 
 Each item can have multiple matches - this doesn't take the first match for each item, it finds *all* of them.
 
-### `GroupJoin[Tfirst, Tsecond, Tkey, Tout](...) []Tout`
+#### `GroupJoin[Tfirst, Tsecond, Tkey, Tout](...) []Tout`
 The actual function signature with args is the following:
 ```go
 Join[Tfirst, Tsecond, Tkey, Tout](
@@ -90,7 +96,8 @@ which should process a `Tfirst` and a list of `Tsecond` to produce a final value
 
 All of these `Tout` values are returned as one list.
 
-### `GroupBy[Tsource, Tkey, Telement, Tout] []Tout`
+### Grouping
+#### `GroupBy[Tsource, Tkey, Telement, Tout] []Tout`
 The actual function signature with args is the following:
 ```go
 GroupBy[Tsource, Tkey, Telement, Tout](
@@ -111,34 +118,52 @@ This processes the item into the form that will make up the group items.
 Finally, for each group, `resultSelector` is given the key of the group `TKey` and all items in the group `[]Telement`,
 and should return a `Tout` object to be added to the list which is then returned.
 
-### `Where[T](check func(T) bool, slice []T) []T`
+### Filtering
+#### `Where[T](check func(T) bool, slice []T) []T`
 This passes every item in the list to `check`, and return a list in which only includes values where `check` was true.
 
-### `Average(slice []float64) float64`
+### Sorting
+#### `OrderBy[T](isFirstLess func(T, T) bool, slice []T) []T`
+Orders a slice using a function that determines if the first item is less or not.
+
+#### `OrderByNumKey[T](keySelector func(T) float64, slice []T) []T`
+Orders a slice where a key to sort by can be selected as a float64.
+
+#### `OrderByDescending[T](...) []T`
+See above.
+
+#### `OrderByNumKeyDescending[T](...) []T`
+See above.
+
+#### `Reverse[T](slice []T) []T`
+Reverses a slice.
+
+### Aggregation
+#### `Average(slice []float64) float64`
 This returns the mean average of the floats passed.
 
-### `Count[T](slice []T) int64`
+#### `Count[T](slice []T) int64`
 This returns the amount of items in the slice.
 
-### `MaxInt(slice []int64) int64`
+#### `MaxInt(slice []int64) int64`
 This returns the largest int in the slice.
 
-### `MaxFloat(slice []float64) float64`
+#### `MaxFloat(slice []float64) float64`
 See above.
 
-### `MinInt(slice []int64) int64`
+#### `MinInt(slice []int64) int64`
 This returns the smallest int in the slice.
 
-### `MinFloat(slice []float64) float64`
+#### `MinFloat(slice []float64) float64`
 See above.
 
-### `SumInts(slice []int64) int64`
+#### `SumInts(slice []int64) int64`
 This returns the sum of all ints in the slice.
 
-### `SumFloats(slice []float64) float64`
+#### `SumFloats(slice []float64) float64`
 See above.
 
-### `Aggregate[T](base T, operation func (working, next T) T, slice []T) T`
+#### `Aggregate[T](base T, operation func (working, next T) T, slice []T) T`
 This takes the item `base` and for each item in the slice,
 passes `working`, and `next` - which is the current slice item,
 into `operation`, and `working` for the next item becomes the output of that.
