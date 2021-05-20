@@ -1,0 +1,12 @@
+package ginq
+
+func where[T](check func(T) bool, slice []T) []T {
+	var out []T
+	for _, item := range slice {
+		if check(item) {
+			out = append(out, item)
+		}
+	}
+
+	return out
+}

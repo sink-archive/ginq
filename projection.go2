@@ -23,14 +23,3 @@ func selectMany[Tin, Tout](operation func(Tin) [] Tout, slice []Tin) []Tout {
 
 	return out
 }
-
-func where[T](check func(T) bool, slice []T) []T {
-	var out []T
-	for _, item := range slice {
-		if check(item) {
-			out = append(out, item)
-		}
-	}
-
-	return out
-}
