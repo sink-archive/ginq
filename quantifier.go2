@@ -1,0 +1,29 @@
+package ginq
+
+func all[T](validate func(T) bool, slice []T) bool {
+	for _, item := range slice {
+		if !validate(item) {
+			return false
+		}
+	}
+
+	return true
+}
+
+func anyItems[T](slice []T) bool {
+	return count[T](slice) != 0
+}
+
+func any[T](validate func(T) bool, slice []T) bool {
+	for _, item := range slice {
+		if validate(item) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func contains[T](item T, slice []T) bool {
+	return any[T](func(t T) bool { return t == item }, slice)
+}

@@ -1,0 +1,89 @@
+package ginq
+
+import "math"
+
+func distinct[T](slice []T) []T {
+	var distinctItems = make(map[T]struct{})
+	for _, item := range slice {
+		distinctItems[item] = struct{}{}
+	}
+
+	var distinctList []T
+	for key := range distinctItems {
+		distinctList = append(distinctList, key)
+	}
+
+	return distinctList
+}
+
+func except[T](first []T, second []T) []T {
+	itemsInSecond := make(map[T]struct{})
+	for _, item := range second {
+		itemsInSecond[item] = struct{}{}
+	}
+
+	var notInSecond []T
+	for _, item := range first {
+		_, exists := itemsInSecond[item]
+		if !exists {
+			notInSecond = append(notInSecond, item)
+		}
+	}
+
+	return notInSecond
+}
+
+func intersect[T](first []T, second []T) []T {
+	itemsInSecond := make(map[T]struct{})
+	for _, item := range second {
+		itemsInSecond[item] = struct{}{}
+	}
+
+	var inBoth []T
+	for _, item := range first {
+		_, exists := itemsInSecond[item]
+		if exists {
+			inBoth = append(inBoth, item)
+		}
+	}
+
+	return inBoth
+}
+
+func union[T](first []T, second []T) []T {
+	allUniqueItems := make(map[T]struct{})
+	for _, item := range first {
+		allUniqueItems[item] = struct{}{}
+	}
+	for _, item := range second {
+		allUniqueItems[item] = struct{}{}
+	}
+
+	var mapAsList []T
+	for key := range allUniqueItems {
+		mapAsList = append(mapAsList, key)
+	}
+
+	return mapAsList
+}
+
+func concat[T](first []T, second []T) []T {
+	allItems := first
+	for _, item := range second {
+		allItems = append(allItems, item)
+	}
+
+	return allItems
+}
+
+func zip[T1, T2, Tout](zipper func(T1, T2) Tout, first []T1, second []T2) []Tout {
+	maxIndex := int(math.Max(float64(len(first)), float64(len(second)))) - 1
+
+	var out []Tout
+
+	for i := 0; i < maxIndex; i++ {
+		out = append(out, zipper(first[i], second[i]))
+	}
+
+	return out
+}

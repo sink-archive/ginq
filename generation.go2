@@ -1,0 +1,31 @@
+package ginq
+
+func defaultIfEmpty[T](default_ T, slice []T) []T {
+	if count[T](slice) == 0 {
+		return []T{ default_ }
+	}
+
+	return slice
+}
+
+func empty[T]() []T {
+	return []T{}
+}
+
+func range_(start, end int64) []int64 {
+	var working []int64
+	for i := start; i <= end; i++ {
+		working = append(working, i)
+	}
+
+	return working
+}
+
+func repeat[T](element T, count int64) []T {
+	var working []T
+	for i := 0; int64(i) < count; i++ {
+		working = append(working, element)
+	}
+
+	return working
+}

@@ -170,3 +170,47 @@ into `operation`, and `working` for the next item becomes the output of that.
 Once done the final value of `working` is returned.
 
 Use this to do things like appending all strings in a list or something IDK.
+
+### Set
+#### `Distinct[T](slice []T) []T`
+This returns the slice with duplicates removed.
+
+#### `Except[T](first []T, second []T) []T`
+This returns every item in `first` that is not in `second`.
+
+#### `Intersect[T](first []T, second []T []T`
+This returns every item that exists in both `first` and `second`.
+
+#### `Union[T](first []T, second []T) []T`
+This returns both lists concatenated, but with duplicates removed.
+
+#### `Concat[T](first []T, second []T) []T`
+This concatenates two slices together and returns the result.
+
+#### `Zip[T1, T2, Tout](zipper func(T1, T2) Tout, first []T1, second []T2) []Tout`
+Zip combines two lists together.
+It does this by running through both lists simultaneously and passing the values at the same index as each to `zipper`.
+The results of this are collected until one of the lists runs out. These results are then returned.
+
+### Quantifier
+#### `All[T](validate func(T) bool, slice []T) bool`
+If ALL the items in the slice pass `validate`, then true, else false.
+
+#### `AnyItems[T](slice []T) bool`
+If the slice contains any items.
+
+#### `Any[T](validate func(T) bool, slice []T) bool`
+If the slice contains any items that pass `validate`.
+
+### Generation
+#### `DefaultIfEmpty[T](default_ T, slice []T) []T`
+Returns the slice, or if it's empty, returns `default_` instead.
+
+#### `Empty[T]() []T`
+Gets an empty slice of `T`.
+
+#### `Range(start, end int64) []int64`
+Returns a slice with every value from start to end, BOTH INCLUSIVE.
+
+#### `Repeat[T](element T, count int64) []T`
+Returns a slice with `element` repeated `count` times.
