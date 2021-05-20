@@ -214,3 +214,22 @@ Returns a slice with every value from start to end, BOTH INCLUSIVE.
 
 #### `Repeat[T](element T, count int64) []T`
 Returns a slice with `element` repeated `count` times.
+
+### Element
+#### `First[T](slice []T) T`
+Get the first item in the slice.
+
+#### `FirstOrDefault[T](default_ T, slice []T) T`
+Get the first item in the slice, or a default.
+
+#### `Last[T](slice []T) T`
+See above.
+
+#### `LastOrDefault[T](default_ T, slice []T) T`
+See above.
+
+#### `Single[T](slice []T) (T, error)`
+Get the only item in the list, or if there is more or none throw an error.
+
+#### `SingleOrDefault[T](default_ T, slice []T) T`
+Single, but instead of an error return `default_`.

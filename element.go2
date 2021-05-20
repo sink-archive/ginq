@@ -1,0 +1,55 @@
+package ginq
+
+import "errors"
+
+func first[T](slice []T) T {
+	return slice[0] // yes im aware this could error
+}
+
+func firstOrDefault[T](default_ T, slice []T) T {
+	if count[T](slice) == 0 {
+		return default_
+	}
+
+	return first[T](slice)
+}
+
+func last[T](slice []T) T {
+	return slice[count[T](slice) - 1] // yes im aware this could error
+}
+
+func lastOrDefault[T](default_ T, slice []T) T {
+	if count[T](slice) == 0 {
+		return default_
+	}
+
+	return last[T](slice)
+}
+
+func elementAt[T](index int64, slice []T) T {
+	return slice[index] // yes im aware this could error
+}
+
+func elementAtOrDefault[T](index int64, default_ T, slice []T) T {
+	if index >= count[T](slice) {
+		return default_
+	}
+
+	return elementAt[T](index, slice)
+}
+
+func single[T](slice []T) (T, error) {
+	if count[T](slice) == 1 {
+		return slice[0], nil
+	}
+
+	return *new(T), errors.New("wasn't one item in the slice")
+}
+
+func singleOrDefault[T](default_ T, slice[]T) T {
+	item, err := single[T](slice)
+	if err != nil {
+		return default_
+	}
+	return item
+}
